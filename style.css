@@ -1,0 +1,14 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+.card { background: #fff; width: 100%; max-width: 420px; padding: 35px 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #1d4ed8; }
+.logo-area { text-align: center; margin-bottom: 20px; }
+.logo-area img { width: 70px; }
+h2 { text-align: center; color: #1e293b; margin-bottom: 10px; font-size: 22px; }
+p { text-align: center; color: #64748b; font-size: 14px; margin-bottom: 25px; }
+.form-group { margin-bottom: 18px; }
+label { display: block; font-weight: 600; font-size: 13px; color: #334155; margin-bottom: 6px; }
+input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; }
+input:focus { outline: none; border-color: #1d4ed8; }
+button { width: 100%; padding: 14px; background: #1d4ed8; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+button:hover { background: #1e40af; }
+.btn-disabled { background: #94a3b8; cursor: not-allowed; }
